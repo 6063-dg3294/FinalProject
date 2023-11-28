@@ -16,13 +16,14 @@ Inspired by the audio examples I saw, maybe I could do a physical device to cont
 Input: physical  
   
 Output: p5
-
+  
 
 ## 3. A LED color-changing hat
 ![image description](./3.PNG)
 Input: physical  
   
 Output: p5 
+  
 Inspired by Adobe's real-time interactive dress (https://people.com/adobe-debuts-interactive-dress-8358152), I thought of combining fashion and intereactive visuals. The barrier I can think of for now is the amount of LEDs to make a big project and how can one Arduino chip hold that. Also, what can p5 do in this case? 
 
 
