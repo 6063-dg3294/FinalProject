@@ -2,7 +2,7 @@ For starters, I looked into the projects online. I keep the research sources her
   
 ## 1. The Anxiety keyboard
 Inspired by the breathing project, I want to create projects that can reflect one's physical movements. The first idea I have is a mini keyboard. 
-![image description](./1.png)
+![image description](./1.PNG)
 Input: physical
   
 Output: p5
@@ -11,7 +11,7 @@ The user can click the keyboard when they feel anxious. I got the idea becuase w
 
 
 ## 2. The audio reative device 
-![image description](./2.png)
+![image description](./2.PNG)
 Inspired by the audio examples I saw, maybe I could do a physical device to control both the shape and audio on p5. 
 Input: physical  
   
@@ -19,7 +19,7 @@ Output: p5
 
 
 ## 3. A LED color-changing hat
-![image description](./3.png)
+![image description](./3.PNG)
 Input: physical  
   
 Output: p5 
