@@ -1,6 +1,6 @@
 let mSerial;
 let readyToRead;
-
+let cColor = 0;
 
 function connect(){
   mSerial.open(9600);
@@ -21,15 +21,18 @@ function setup() {
 
 function draw() {
   background(0);
+
   if (readyToRead){
     mSerial.clear();
     mSerial.write(10);
     readyToRead = false;
-
   }
+
   if (mSerial.opened() && mSerial.availableBytes() > 0){
     let mLine = mSerial.readUntil("\n");
-    print(mLine);
+
+    // print(mLine);
+    cColor = constrain(parseInt(mLine), 0, 255);
     readyToRead = true;
   }
 
