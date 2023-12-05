@@ -1,12 +1,18 @@
 let mSerial;
+let readyToRead;
+
 
 function connect(){
   mSerial.open(9600);
+  readyToRead = true;
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   mSerial = createSerial();
+
+  readyToRead = false;
+
    
   let mConnectButton = createButton("Connect to Serial");
   mConnectButton.position(width/2, height/2);
@@ -15,9 +21,16 @@ function setup() {
 
 function draw() {
   background(0);
-  if (mSerial.opened()&& mSerial.availableBytes() > 0){
+  if (readyToRead){
+    mSerial.clear();
+    mSerial.write(10);
+    readyToRead = false;
+
+  }
+  if (mSerial.opened() && mSerial.availableBytes() > 0){
     let mLine = mSerial.readUntil("\n");
-    print(mline);
+    print(mLine);
+    readyToRead = true;
   }
 
 }
