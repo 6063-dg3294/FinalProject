@@ -20,6 +20,42 @@ By creating a circle array and a rectangle array, I put all shapes in a uniform,
 ![image description](./10.png)
 
 
+# Milestone 2
+### System Diagram
+![image description](./2-1.jpg)
+
+### Circuit Diagram & Outlook
+![image description](./2-2.jpg)
+![image description](./2-3.jpg)
+
+### Planned Mechanism & Relation to Readings
+The plan is to recreate a metaphor I like: butterfly and human beings.The story of "庄周梦蝶" (Zhuangzi's Butterfly Dream) is a metaphorical narrative where the philosopher Zhuangzi dreams of being a butterfly, experiencing the world through its perspective. Upon waking, he questions the nature of reality, pondering whether he is a man who dreamt of being a butterfly or a butterfly dreaming of being a man. The metaphor underscores the philosophical concept of the relativity of perception and challenges the certainty of objective reality.
+  
+The mechanism, like stated in the system diagram, would be:
+  
+1. Visual language of reality is generated when the "butterfly" button is pressed
+2. Visual language of dreams is generated when the "human" button is pressed
+3. photosensor detects change of light to decide the overall statement of the blend of reality and dream
+  
+Of all the readings we read, I felt that the evolution of technology and visual language use the power of media to render a new reality that we all share. We face the decrease of reality every day, and the digital environment we live in seems equal to all, but is controlled by those who own power. While we live around information, the boundary of reality and dreams become even more vague. My original idea was only an anxiety-release button, but with the concept I would explore the boundary of our life and our dreams. 
+
+
+### Reference images, texts and projects
+(https://pepper-minute-d06.notion.site/Week-11-db2a3223915546ea96b4f5be9b1ca038?pvs=4)
+
+### Plan for user testing
+I planned to have my roommates test the quality and impression of the p5 visuals and explore their feedbacks. 
+
+### Influences 
+1. how does it connected to society?
+For the project, I started from the idea of relieving anxiety by having buttons to press. The project would help people relieve certain pressure by physical movements in the time of increased anxiety among various age groups. 
+
+2. why is it important to you?
+Like I said above, the readings we have read on de-capitalism and the power of media and visual language made me think of the boundary of reality and dreams. 
+
+  
+  
+  
 
 # Week 1
 For starters, I looked into the projects online. I keep the research sources here: https://pepper-minute-d06.notion.site/Week-11-db2a3223915546ea96b4f5be9b1ca038?pvs=4   
