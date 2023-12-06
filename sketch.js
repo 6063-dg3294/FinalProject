@@ -67,7 +67,7 @@ function draw() {
 
   }
 
-
+// I used splice to control the total shape ns
   if (rectangles.length > 50) {
     rectangles.splice(0, 1);
   }
