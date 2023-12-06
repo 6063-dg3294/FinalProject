@@ -1,3 +1,27 @@
+# Week 2
+This week, I put my efforts on how to make the serial connection. I started by learning the Serial tutorial. In the meantime, I added more research into the documentation - Idea 1 Development (https://pepper-minute-d06.notion.site/Week-11-db2a3223915546ea96b4f5be9b1ca038?pvs=4). I learned examples on creating physical keyboards and began thinking do I need a final real keycap.
+
+![image description](./8.jpg)
+I tried to follow the tutorial to try out the connection itself. In the process, I encountered bugs like don't have the serial monitor on at the same time of using the browser. 
+
+![image description](./4.png)
+
+After the successful connection, I wanted to build visuals that would inspire the final idea of releasing anxiety. I love butterflies and the metaphor they represent lately. I wrote circles which sizes are controlled by the photosenser to form the wings of butterflies. Here's the effect:
+![image description](./5.png)
+![image description](./6.png)
+
+It looked pretty ugly. 
+  
+So, I drew a previz on colorful circles and squares to spread out the space instead of crawling in the center. 
+![image description](./7.jpg)
+
+By creating a circle array and a rectangle array, I put all shapes in a uniform, random position that responded to the amount of light detected. A vivid, inspiring image would be adjustable by playing with the photosensor. I like the pixel art feeling it created. 
+![image description](./9.png)
+![image description](./10.png)
+
+
+
+# Week 1
 For starters, I looked into the projects online. I keep the research sources here: https://pepper-minute-d06.notion.site/Week-11-db2a3223915546ea96b4f5be9b1ca038?pvs=4   
   
 ## 1. The Anxiety keyboard
