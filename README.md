@@ -53,8 +53,8 @@ For the project, I started from the idea of relieving anxiety by having buttons 
 2. why is it important to you?
 Like I said above, the readings we have read on de-capitalism and the power of media and visual language made me think of the boundary of reality and dreams. 
 
-  
-  
+### Possible Extended Libraries
+I might use any library that would help me create the texture of reality (maybe I'll use camera).
   
 
 # Week 1
