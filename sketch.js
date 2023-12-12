@@ -30,7 +30,7 @@ function setup() {
 }
 
 function draw() {
-  frameRate(60);
+  // frameRate(60);
   // https://p5js.org/reference/#/p5/blendMode
   blendMode(BURN);
   alpha = map(frameCount % 60, 0, width, 0, 55);
