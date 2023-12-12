@@ -2,13 +2,12 @@ let mSerial;
 let readyToRead;
 
 let seaWave = [];
-let dropNum = 6000
-;
+let dropNum = 6000;
 const ParticleArray = Array(dropNum);
 let alpha;
 
 function connect() {
-  mSerial.open(57600);
+  mSerial.open(9600);
   readyToRead = true;
 }
 
@@ -39,60 +38,28 @@ function draw() {
 
   loadPixels();
 
-  // for (let p of ParticleArray) {
-  //   p.move();
-  // }
-
-  ParticleArray.forEach(p => p.move());
-
-  if (mSerial.opened() && readyToRead) {
-    print("Ready");
-    mSerial.clear();
-    mSerial.write(10);
-    readyToRead = false;
-  }
-
-  if(frameCount%100 == 0) {
-    print(mSerial.opened(), readyToRead, mSerial.availableBytes(), frameRate());
-  }
-
-  if (mSerial.opened() && mSerial.availableBytes() > 0) {
-    print("available");
-    let mLine = mSerial.readUntil("\n");
-    print(mLine);
-
-    seaWave.push({
-      x: 0,
-      y: height / 2,
-      speed: map(parseFloat(mLine), 0, 255, 0.1, 5),
-      amplitude: random(10, 50),
-      noiseOffsetX: random(1000),
-      noiseOffsetY: random(1000),
-    });
-
-    readyToRead = true;
+  for (let p of ParticleArray) {
+    p.move();
   }
 
   for (let i = 0; i < seaWave.length; i++) {
     seaWave[i].x += seaWave[i].speed;
     seaWave[i].y =
-        height / 2 +
-        sin(noise(seaWave[i].noiseOffsetX) * 2 * PI) * seaWave[i].amplitude +
-        sin(noise(seaWave[i].noiseOffsetY) * 2 * PI) * seaWave[i].amplitude;
+      height / 2 +
+      sin(noise(seaWave[i].noiseOffsetX) * 2 * PI) * seaWave[i].amplitude +
+      sin(noise(seaWave[i].noiseOffsetY) * 2 * PI) * seaWave[i].amplitude;
 
     seaWave[i].noiseOffsetX += 0.01 * seaWave[i].speed;
     seaWave[i].noiseOffsetY += 0.01 * seaWave[i].speed;
 
     fill(
-        map(mSerial.read(), 0, 255, 20, 255),
-        map(mSerial.read(), 0, 255, 0, 100),
-        map(mSerial.read(), 0, 255, 0, 200),
-        alpha
+      map(mSerial.read(), 0, 255, 0, 360),
+      map(mSerial.read(), 0, 255, 150, 255),
+      255,
+      alpha
     );
     ellipse(seaWave[i].x, seaWave[i].y, 10, 10);
-}
-
-
+  }
 
   seaWave = seaWave.filter((wave) => wave.x < width);
 
