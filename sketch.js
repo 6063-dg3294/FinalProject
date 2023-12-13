@@ -1,27 +1,32 @@
 let mSerial;
 let readyToRead;
 
+let mCamera;
+
 let seaWave = [];
-let dropNum = 6000
-;
+let dropNum = 6000;
 const ParticleArray = Array(dropNum);
 let alpha;
+let currentSerialVal = 0; // Initialize currentSerialVal
 
 function connect() {
-  mSerial.open(57600);
+  mSerial.open(9600);
   readyToRead = true;
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+
+  pixelDensity(1);
+  mCamera = createCapture(VIDEO);
+  mCamera.hide();
+
   mSerial = createSerial();
   readyToRead = false;
 
   let mConnectButton = createButton("Connect to Serial");
   mConnectButton.position(width / 2, height / 2);
   mConnectButton.mousePressed(connect);
-
-  // draw
 
   noStroke();
   smooth();
@@ -30,19 +35,14 @@ function setup() {
 }
 
 function draw() {
-  // frameRate(60);
-  // https://p5js.org/reference/#/p5/blendMode
+  image(mCamera, 0, 0, width/5, height);
+
   blendMode(BURN);
   alpha = map(frameCount % 60, 0, width, 0, 55);
   fill(0, alpha);
   rect(0, 0, width, height);
 
   loadPixels();
-
-  // for (let p of ParticleArray) {
-  //   p.move();
-  // }
-
   ParticleArray.forEach(p => p.move());
 
   if (mSerial.opened() && readyToRead) {
@@ -52,19 +52,17 @@ function draw() {
     readyToRead = false;
   }
 
-  if(frameCount%100 == 0) {
-    print(mSerial.opened(), readyToRead, mSerial.availableBytes(), frameRate());
-  }
-
   if (mSerial.opened() && mSerial.availableBytes() > 0) {
     print("available");
     let mLine = mSerial.readUntil("\n");
     print(mLine);
 
+    currentSerialVal = parseFloat(mLine); // Update currentSerialVal with new data
+
     seaWave.push({
       x: 0,
       y: height / 2,
-      speed: map(parseFloat(mLine), 0, 255, 0.1, 5),
+      speed: map(currentSerialVal, 0, 255, 0.1, 5),
       amplitude: random(10, 50),
       noiseOffsetX: random(1000),
       noiseOffsetY: random(1000),
@@ -72,7 +70,6 @@ function draw() {
 
     readyToRead = true;
   }
-
   for (let i = 0; i < seaWave.length; i++) {
     seaWave[i].x += seaWave[i].speed;
     seaWave[i].y =
@@ -84,9 +81,9 @@ function draw() {
     seaWave[i].noiseOffsetY += 0.01 * seaWave[i].speed;
 
     fill(
-        map(mSerial.read(), 0, 255, 20, 255),
-        map(mSerial.read(), 0, 255, 0, 100),
-        map(mSerial.read(), 0, 255, 0, 200),
+        map(currentSerialVal, 0, 255, 20, 250),
+        map(currentSerialVal, 0, 255, 0, 100),
+        map(currentSerialVal, 0, 255, 0, 200),
         alpha
     );
     ellipse(seaWave[i].x, seaWave[i].y, 10, 10);
@@ -119,11 +116,13 @@ class Particle {
     this.n = noise(0.01 * width);
   }
 
+
+
   update() {
     this.incr += 0.01;
     this.theta = noise(this.posX * 0.002, this.posY * 0.004, this.incr) * TWO_PI;
-    this.posX += 2 * cos(this.theta) * map(mSerial.read(), 0, 255, 0.1, 2);
-    this.posY += 2 * sin(this.theta) * map(mSerial.read(), 0, 255, 0.1, 2);
+    this.posX += 2 * cos(this.theta) * map(currentSerialVal, 0, 255, 0.1, 2);
+    this.posY += 2 * sin(this.theta) * map(currentSerialVal, 0, 255, 0.1, 2);
   }
 
   display() {

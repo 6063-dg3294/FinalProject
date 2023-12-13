@@ -88,6 +88,36 @@ Inspired by Adobe's real-time interactive dress (https://people.com/adobe-debuts
 
 
 
+# Milestone 3
+Based on the former weeks' sketch, I worked on the background control and testing the dream layer this week using the photoresistor. 
+![image description](./3-1.jpg)
+
+I used the same circuit from last time, and here's an updated FSM. 
+![image description](./2-2.jpg)
+![image description](./3-2.jpg)
+
+## Development of Background set up
+This week, I started from a mood board of how to build a virtual dream scene somehow. I also looked into different reference codes on OpenProcessing (@Richard Bourne) because I want to create this sea-like waves accross the screen. I refered the creation of waves using triangulars and noise().
+![image description](./3-3.png)
+ 
+ The process was not smooth, but I (we) managed to achieve the desired result. Here are some sketches along the process:
+   
+![image description](./3-4.png)
+The initial prototype look like this. I found out I myself wasn't ablt to create very delicate designs.
+  
+![image description](./3-6.png)
+After debugging and creating a parameter for the reading of photoresister, the connection was successful, and now I can use light to control the moving speed of the visuals. 
+  
+## Development of the Reality Part: Real-time camera
+During the time of stucking to debug the connection problem, I began experimenting with the blending of real-time camera with the waves. The initial effect looks like this. I'm trying to create slices of real-time images.
+  
+![image description](./3-5.png)
+
+
+
+
+
+
 
 
 # p5.js Template
