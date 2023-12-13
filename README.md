@@ -115,7 +115,8 @@ During the time of stucking to debug the connection problem, I began experimenti
 
 
 
-
+## The Rest of the Prompts
+You can check the indexes of Milestone 2 for Description of any sensor, output component or mechanism that you are planning on using or building, Reference images, texts and projects, Plan for user testing, and Short discussion of why your project is relevant. I'm still on the track of the original plan. 
 
 
 
