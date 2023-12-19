@@ -6,7 +6,6 @@ const ParticleArray = Array(dropNum);
 let alpha;
 let currentSerialVal1 = 0;
 let currentSerialVal2 = 0;
-let  currentSerialVal3 = 0;
 let currentStage = 1;
 
 function connect() {
@@ -43,15 +42,10 @@ function parseSerialData(data) {
   if (vals.length >= 2) {
     currentSerialVal1 = parseInt(vals[0]);
     currentSerialVal2 = parseInt(vals[1]);
-    currentSerialVal3 = parseInt(vals[2]);
-    console.log("Parsed values:", currentSerialVal1, currentSerialVal2, currentSerialVal3);
+    console.log("Parsed values:", currentSerialVal1, currentSerialVal2);
     if (currentSerialVal2 === 1) {
       console.log("Switching to stage 2");
       currentStage = 2;
-
-      if (currentSerialVal3 === 1) {
-        console.log("Switching to stage butterfly");
-        currentStage = 3;
     }
   }
 }
@@ -61,8 +55,6 @@ function draw() {
     stage1();
   } else if (currentStage === 2) {
     stage2();
-  } else if (currentStage === 3) {
-    stage3();
   }
 
   // Request and read data from serial

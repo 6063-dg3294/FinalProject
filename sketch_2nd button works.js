@@ -6,7 +6,6 @@ const ParticleArray = Array(dropNum);
 let alpha;
 let currentSerialVal1 = 0;
 let currentSerialVal2 = 0;
-let  currentSerialVal3 = 0;
 let currentStage = 1;
 
 function connect() {
@@ -17,14 +16,14 @@ function connect() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   pixelDensity(1);
-  // mCamera = createCapture(VIDEO);
-  // mCamera.hide();
+  mCamera = createCapture(VIDEO);
+  mCamera.hide();
 
   mSerial = createSerial();
   
 
   let mConnectButton = createButton("Connect to Serial");
-  mConnectButton.position(width - 100, height / 10 * 9);
+  mConnectButton.position(width / 2, height / 2);
   mConnectButton.mousePressed(connect);
 
   setParticles(); // Initialize particles
@@ -43,15 +42,10 @@ function parseSerialData(data) {
   if (vals.length >= 2) {
     currentSerialVal1 = parseInt(vals[0]);
     currentSerialVal2 = parseInt(vals[1]);
-    currentSerialVal3 = parseInt(vals[2]);
-    console.log("Parsed values:", currentSerialVal1, currentSerialVal2, currentSerialVal3);
+    console.log("Parsed values:", currentSerialVal1, currentSerialVal2);
     if (currentSerialVal2 === 1) {
       console.log("Switching to stage 2");
       currentStage = 2;
-
-      if (currentSerialVal3 === 1) {
-        console.log("Switching to stage butterfly");
-        currentStage = 3;
     }
   }
 }
@@ -61,8 +55,6 @@ function draw() {
     stage1();
   } else if (currentStage === 2) {
     stage2();
-  } else if (currentStage === 3) {
-    stage3();
   }
 
   // Request and read data from serial
@@ -83,23 +75,24 @@ function serialEvent() {
   }
 }
 
+// ... rest of your code (parseSerialData, stage1, stage2, etc.)
 
-// function parseSerialData(data) {
-//   let vals = data.split(",");
-//   if (vals.length >= 2) {
-//     currentSerialVal1 = parseFloat(vals[0]); // analog value from A0
-//     currentSerialVal2 = parseInt(vals[1]); // digital state from D2
-//     console.log("Parsed values:", currentSerialVal1, currentSerialVal2);
+function parseSerialData(data) {
+  let vals = data.split(",");
+  if (vals.length >= 2) {
+    currentSerialVal1 = parseFloat(vals[0]); // analog value from A0
+    currentSerialVal2 = parseInt(vals[1]); // digital state from D2
+    console.log("Parsed values:", currentSerialVal1, currentSerialVal2);
 
-//     if (currentSerialVal2 === 1) {
-//       console.log("Switching to stage 2");
-//       currentStage = 2;
-//     }
-//   }
-// }
+    if (currentSerialVal2 === 1) {
+      console.log("Switching to stage 2");
+      currentStage = 2;
+    }
+  }
+}
 
 function stage1() {
-  background("blue");
+  background(100);
   fill("pink");
   textAlign(CENTER, CENTER);
   text("Welcome! Click to start.", width / 2, height / 2);
@@ -110,20 +103,16 @@ function stage2() {
   smooth();
   alpha = 55;
 
-  // image(mCamera, 0, 0, width / 5, height);
+  image(mCamera, 0, 0, width / 5, height);
 
   fill("blue");
-  // ellipse(width / 2, height / 2, 300, 300);
-  rect(0, height/4*3, width, height/70);
-  rect(0, height/4*3 - 30, width, height/70);
-
+  ellipse(width / 2, height / 2, 300, 300);
   blendMode(BLEND);
   alpha = map(frameCount % 60, 0, width, 0, 55);
-  fill(150, 20, currentSerialVal1, alpha);
+  fill(0, alpha);
   rect(0, 0, width, height);
 
   loadPixels();
-  
   ParticleArray.forEach(p => p.move());
 
   for (let i = 0; i < seaWave.length; i++) {
