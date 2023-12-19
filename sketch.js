@@ -1,33 +1,53 @@
 let mSerial;
-let readyToRead;
 let mCamera;
 let seaWave = [];
 let dropNum = 6000;
 const ParticleArray = Array(dropNum);
 let alpha;
-let currentSerialVal1 = 0; // Initialize first serial value
-let currentSerialVal2 = 0; // Initialize second serial value
+let currentSerialVal1 = 0;
+let currentSerialVal2 = 0;
 let currentStage = 1;
 
 function connect() {
-  mSerial.open(9600);
-  readyToRead = true;
+  console.log("Attempting to open Serial Connection...");
+  mSerial.open(9600); // Replace with your actual serial port
 }
 
 function setup() {
+  createCanvas(windowWidth, windowHeight);
+  pixelDensity(1);
+  mCamera = createCapture(VIDEO);
+  mCamera.hide();
 
   mSerial = createSerial();
-  readyToRead = false;
+  mSerial.on('data', serialEvent); // Set callback for new data
 
   let mConnectButton = createButton("Connect to Serial");
   mConnectButton.position(width / 2, height / 2);
   mConnectButton.mousePressed(connect);
 
   setParticles(); // Initialize particles
-  createCanvas(windowWidth, windowHeight);
-  pixelDensity(1);
-  mCamera = createCapture(VIDEO);
-  mCamera.hide();
+}
+
+function serialEvent() {
+  let inString = mSerial.readLine();
+  if (inString) {
+    console.log("Received data:", inString);
+    parseSerialData(inString);
+  }
+}
+
+function parseSerialData(data) {
+  let vals = data.split(",");
+  if (vals.length >= 2) {
+    currentSerialVal1 = parseFloat(vals[0]);
+    currentSerialVal2 = parseInt(vals[1]);
+    console.log("Parsed values:", currentSerialVal1, currentSerialVal2);
+    if (currentSerialVal2 === 1) {
+      console.log("Switching to stage 2");
+      currentStage = 2;
+    }
+  }
 }
 
 function draw() {
@@ -36,26 +56,7 @@ function draw() {
   } else if (currentStage === 2) {
     stage2();
   }
-
-  if (mSerial.opened() && readyToRead) {
-    if (mSerial.availableBytes() > 0) {
-      let mLine = mSerial.readUntil("\n");
-      let vals = mLine.split(",");
-        currentSerialVal1 = parseFloat(vals[0]);
-        currentSerialVal2 = parseInt(vals[1])
-      if (mLine) {
-        console.log("Received data:", mLine);
-        if (currentSerialVal2 == 1) {
-          console.log("Switching to stage 2");
-            currentStage = 2;
-          }
-
-          readyToRead = false;
-        }
-      }
-    }
-  }
-
+}
 
 function stage1() {
   background(100);
@@ -88,7 +89,6 @@ function stage2() {
     seaWave[i].noiseOffsetY += 0.01 * seaWave[i].speed;
 
     fill(map(currentSerialVal1, 0, 255, 20, 250), map(currentSerialVal1, 0, 255, 0, 100), map(currentSerialVal1, 0, 255, 0, 200), alpha);
-    
     ellipse(seaWave[i].x, seaWave[i].y, 10, 10);
   }
 
