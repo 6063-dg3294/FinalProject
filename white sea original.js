@@ -6,6 +6,8 @@ let dropNum = 6000;
 const ParticleArray = Array(dropNum);
 let alpha;
 
+
+
 function connect() {
   mSerial.open(9600);
   readyToRead = true;

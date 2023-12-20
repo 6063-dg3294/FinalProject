@@ -1,6 +1,6 @@
 let mSerial;
 let seaWave = [];
-let dropNum = 6000;
+let dropNum = 9000;
 const ParticleArray = Array(dropNum);
 let alpha;
 let currentSerialVal1 = 0;
@@ -11,8 +11,27 @@ let currentStage = 1;
 let butterflyarray = [];
 let mCamera;
 
+let mySound;
+let audioControlRect = { x: 30, y: 30, width: 170, height: 80, color: 'green' };
+let audioPlaying = false;
+
 function preload() {
   gif_createImg = createImg("giphy.gif");
+  // soundFormats('mp3', 'ogg');
+  mySound = loadSound('taiyi.mp3');
+}
+
+function audioPressed() {
+  // Play or pause the sound when the rectangle is clicked
+  if (!audioPlaying) {
+    mySound.loop(); // Use loop instead of play for continuous playing
+    audioPlaying = true;
+    audioControlRect.color = 'red';  // Change color to indicate the audio is playing
+  } else {
+    mySound.pause();
+    audioPlaying = false;
+    audioControlRect.color = 'green';  // Change color back to indicate the audio is paused
+  }
 }
 
 function connect() {
@@ -21,6 +40,8 @@ function connect() {
 }
 
 function setup() {
+  mySound.setVolume(0.5);
+
   let canvasWidth = windowWidth - 300;
   let canvasHeight = windowHeight / 2;
   let cnv = createCanvas(canvasWidth, canvasHeight);
@@ -69,9 +90,29 @@ function createButterfly() {
     x: random(width),
     y: random(height),
     size: random(20, 50),
+    alpha: 255, // Initial alpha value
     g: loadImage("giphy.gif"),
   };
   butterflyarray.push(butinfo);
+}
+
+function mousePressed() {
+  // Check if the mouse is inside the rectangle
+  if (mouseX > audioControlRect.x && mouseX < audioControlRect.x + audioControlRect.width &&
+      mouseY > audioControlRect.y && mouseY < audioControlRect.y + audioControlRect.height) {
+    audioPressed();
+  }
+}
+
+function audioPressed() {
+  // Play or pause the sound when the rectangle is clicked
+  if (!audioPlaying) {
+    mySound.loop(); // Use loop instead of play for continuous playing
+    audioPlaying = true;
+  } else {
+    mySound.pause();
+    audioPlaying = false;
+  }
 }
 
 function draw() {
@@ -110,9 +151,14 @@ function stage1() {
   background("blue");
   fill("pink");
   textAlign(CENTER, CENTER);
-  text("Welcome! Click to start.", width / 2, height / 2);
-}
+  text("庄周梦蝶", width / 2, height / 2 - 20);
+  text("Welcome! Press Button1 to start.", width / 2, height / 2);
+  textAlign(CENTER, CENTER);
+  fill("red")
+  text("Play Audio", audioControlRect.x + audioControlRect.width / 2, audioControlRect.y + audioControlRect.height / 2);
 
+
+}
 function stage2() {
   noStroke();
   smooth();
@@ -151,12 +197,22 @@ function stage2() {
   }
 
   updatePixels();
-  for (let i = 0; i < butterflyarray.length; i++){
+  for (let i = 0; i < butterflyarray.length; i++) {
     let butterfly = butterflyarray[i];
-    // butterfly.g.position(butterfly.x, butterfly.y);
-    image(butterfly.g, butterfly.x, butterfly.y, 100, 100);
 
-  } 
+    // Decrease the alpha value
+    butterfly.alpha -= 1; // You can adjust the rate of alpha reduction
+
+    // Remove butterflies with alpha <= 0
+    if (butterfly.alpha <= 0) {
+      butterflyarray.splice(i, 1);
+      i--;
+    }
+
+    // Set the alpha when displaying the image
+    tint(255, butterfly.alpha);
+    image(butterfly.g, butterfly.x, butterfly.y, 100, 100);
+  }
 
 
 }
