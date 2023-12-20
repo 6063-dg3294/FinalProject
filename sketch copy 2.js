@@ -1,24 +1,19 @@
-var gif_createImg;
-
 let mSerial;
-let mCamera;
 let seaWave = [];
 let dropNum = 6000;
 const ParticleArray = Array(dropNum);
 let alpha;
 let currentSerialVal1 = 0;
 let currentSerialVal2 = 0;
-let  currentSerialVal3 = 0;
+let currentSerialVal3 = 0;
+let currentSerialVal4 = 0;
 let currentStage = 1;
-
 let butterflyarray = [];
+let mCamera;
 
 function preload() {
   gif_createImg = createImg("giphy.gif");
 }
-
-
-
 
 function connect() {
   console.log("Attempting to open Serial Connection...");
@@ -27,7 +22,7 @@ function connect() {
 
 function setup() {
   let canvasWidth = windowWidth - 300;
-  let canvasHeight = windowHeight/2;
+  let canvasHeight = windowHeight / 2;
   let cnv = createCanvas(canvasWidth, canvasHeight);
   let x = (windowWidth - width) / 2;
   let y = (windowHeight - height) / 2;
@@ -35,12 +30,8 @@ function setup() {
   background(0);
 
   pixelDensity(1);
-  // mCamera = createCapture(VIDEO);
-  // mCamera.hide();
-
   mSerial = createSerial();
   
-
   let mConnectButton = createButton("Connect to Serial");
   mConnectButton.position(windowWidth - 300, windowHeight / 10 * 9);
   mConnectButton.mousePressed(connect);
@@ -48,77 +39,72 @@ function setup() {
   setParticles(); // Initialize particles
 }
 
-
 function parseSerialData(data) {
   let vals = data.split(",");
-  if (vals.length >= 3) {
+  if (vals.length >= 4) {
     currentSerialVal1 = parseInt(vals[0]);
     currentSerialVal2 = parseInt(vals[1]);
     currentSerialVal3 = parseInt(vals[2]);
-    console.log("Parsed values:", currentSerialVal1, currentSerialVal2, currentSerialVal3);
-    
-    // Handle button press for stage switching or other actions
-    if (currentSerialVal2 === 1) {
-      console.log("Button 1 pressed, switching to stage 2");
-      currentStage = 2;
-    } else if (currentSerialVal3 === 1) {
-        console.log("Switching to stage butterfly");
-        // drawgif();
-      let butinfo = {
-        x: random(windowWidth),
-        y: random(windowHeight),
-        size: random(20, 50),
-        g: loadImage("giphy.gif"),
-        createdTime: millis()
-      }
-
-      butterflyarray.push(butinfo);
-
-    }
+    currentSerialVal4 = parseInt(vals[3]);
+    console.log("Parsed values:", currentSerialVal1, currentSerialVal2, currentSerialVal3, currentSerialVal4);
+    handleStageTransition();
   }
 }
 
-function drawgif(){
-  blendMode(BLEND);
-  // gif_createImg.position(width - 200, 350);
+function handleStageTransition() {
+  if (currentSerialVal2 === 1) {
+    console.log("Switching to stage 2");
+    currentStage = 2;
+  } else if (currentSerialVal3 === 1) {
+    console.log("Switching to butterfly stage");
+    createButterfly();
+  } else if (currentSerialVal4 === 1) {
+    console.log("Switching to stage 4");
+    currentStage = 4;
+  }
+}
+
+function createButterfly() {
+  let butinfo = {
+    x: random(width),
+    y: random(height),
+    size: random(20, 50),
+    g: loadImage("giphy.gif"),
+  };
+  butterflyarray.push(butinfo);
 }
 
 function draw() {
-  if (currentStage === 1) {
-    stage1();
-  } else if (currentStage === 2) {
-    stage2();
-  // } else if (currentStage === 3) {
-  //   stage3();
+  switch (currentStage) {
+    case 1:
+      stage1();
+      break;
+    case 2:
+      stage2();
+      break;
+    case 4:
+      stage4();
+      break;
+    // Add other cases as needed
   }
 
-  // Request and read data from serial
-  if (frameCount % 60 === 0) { // Send request every second
-    mSerial.write('\n'); // Request data from Arduino
+  if (frameCount % 60 === 0) {
+    mSerial.write('\n');
   }
 
   if (mSerial.available() > 0) {
-    serialEvent(); // Handle incoming serial data
+    serialEvent();
   }
 }
-
-let serialBuffer = '';
-
 function serialEvent() {
-  while (mSerial.available()) {
-    // Read a char from the serial and add it to the buffer
-    let inChar = mSerial.read();
-    if (inChar === '\n') {
-      let dataString = serialBuffer.trim(); // Remove whitespace
-      if (dataString.length > 0) {
-        parseSerialData(dataString);
-      }
-      serialBuffer = ''; // Clear the buffer
-    } else {
-      serialBuffer += inChar; // Accumulate the char into the buffer
-    }
+  let inString = mSerial.read();
+  if (inString) {
+    console.log("Received data:", inString);
+    parseSerialData(inString);
   }
 }
+
+
 
 function stage1() {
   background("blue");
@@ -165,26 +151,78 @@ function stage2() {
   }
 
   updatePixels();
-
-  let currentTime = millis();
   for (let i = 0; i < butterflyarray.length; i++){
     let butterfly = butterflyarray[i];
     // butterfly.g.position(butterfly.x, butterfly.y);
-    if (currentTime - butterfly.createdTime < 10000){
-      image(butterfly.g, butterfly.x, butterfly.y, 50, 50);
-    }
+    image(butterfly.g, butterfly.x, butterfly.y, 100, 100);
+
   } 
 
-  butterflyarray = butterflyarray.filter(butterfly => currentTime - butterfly.createdTime < 5000);
+
 }
 
 function stage3() {
   // butterfly flew from the lower right corner
   background(0);
   let dropNum = 300;
+  let pixelSlider;
 
 }
 
+let pixelSize = 12; // Initial pixelation factor
+let accumulatedPixelSize = 0; 
+
+function stage4() {
+  if (!mCamera) {
+    mCamera = createCapture(VIDEO);
+    mCamera.hide(); // Hide the HTML element, but still draw it in the canvas
+  }
+  background(255, 204, 0);
+
+  // Accumulate pixelation effect if currentSerialVal4 is 1
+  if (currentSerialVal4 === 1) {
+    accumulatedPixelSize += 4; // Adjust the increment value as needed
+  } 
+
+
+  // Ensure the accumulated pixel size stays within a desired range
+  accumulatedPixelSize = constrain(accumulatedPixelSize, 0, 30);
+
+  // Calculate the number of pixels in both dimensions
+  let cols = width / (pixelSize + accumulatedPixelSize);
+  let rows = height / (pixelSize + accumulatedPixelSize);
+
+  // Loop through the camera feed and pixelate
+  mCamera.loadPixels();
+  loadPixels();
+
+  for (let i = 0; i < cols; i++) {
+    for (let j = 0; j < rows; j++) {
+      // Calculate the pixel coordinates
+      let x = i * (pixelSize + accumulatedPixelSize);
+      let y = j * (pixelSize + accumulatedPixelSize);
+
+      // Calculate the pixel index in the camera feed
+      let cameraX = int(map(i, 0, cols, 0, mCamera.width));
+      let cameraY = int(map(j, 0, rows, 0, mCamera.height));
+
+      // Get the color from the camera feed
+      let col = mCamera.get(cameraX, cameraY);
+
+      // Set the pixel color in the canvas
+      for (let dx = 0; dx < (pixelSize + accumulatedPixelSize); dx++) {
+        for (let dy = 0; dy < (pixelSize + accumulatedPixelSize); dy++) {
+          let px = x + dx;
+          let py = y + dy;
+          set(px, py, col);
+        }
+      }
+    }
+  }
+
+  // Update the canvas with the pixelated camera feed
+  updatePixels();
+}
 
 
 

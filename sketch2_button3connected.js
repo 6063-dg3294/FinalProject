@@ -1,5 +1,3 @@
-var gif_createImg;
-
 let mSerial;
 let mCamera;
 let seaWave = [];
@@ -11,29 +9,13 @@ let currentSerialVal2 = 0;
 let  currentSerialVal3 = 0;
 let currentStage = 1;
 
-let butterflyarray = [];
-
-function preload() {
-  gif_createImg = createImg("giphy.gif");
-}
-
-
-
-
 function connect() {
   console.log("Attempting to open Serial Connection...");
   mSerial.open(9600); // Replace with your actual serial port
 }
 
 function setup() {
-  let canvasWidth = windowWidth - 300;
-  let canvasHeight = windowHeight/2;
-  let cnv = createCanvas(canvasWidth, canvasHeight);
-  let x = (windowWidth - width) / 2;
-  let y = (windowHeight - height) / 2;
-  cnv.position(x, y);
-  background(0);
-
+  createCanvas(windowWidth, windowHeight);
   pixelDensity(1);
   // mCamera = createCapture(VIDEO);
   // mCamera.hide();
@@ -42,54 +24,46 @@ function setup() {
   
 
   let mConnectButton = createButton("Connect to Serial");
-  mConnectButton.position(windowWidth - 300, windowHeight / 10 * 9);
+  mConnectButton.position(width - 100, height / 10 * 9);
   mConnectButton.mousePressed(connect);
 
   setParticles(); // Initialize particles
 }
 
+function serialEvent() {
+  let inString = mSerial.readLine();
+  if (inString) {
+    console.log("Received data:", inString);
+    parseSerialData(inString);
+  }
+}
 
 function parseSerialData(data) {
   let vals = data.split(",");
-  if (vals.length >= 3) {
+  if (vals.length >= 2) {
     currentSerialVal1 = parseInt(vals[0]);
     currentSerialVal2 = parseInt(vals[1]);
     currentSerialVal3 = parseInt(vals[2]);
     console.log("Parsed values:", currentSerialVal1, currentSerialVal2, currentSerialVal3);
-    
-    // Handle button press for stage switching or other actions
     if (currentSerialVal2 === 1) {
-      console.log("Button 1 pressed, switching to stage 2");
+      console.log("Switching to stage 2");
       currentStage = 2;
+
     } else if (currentSerialVal3 === 1) {
         console.log("Switching to stage butterfly");
-        // drawgif();
-      let butinfo = {
-        x: random(windowWidth),
-        y: random(windowHeight),
-        size: random(20, 50),
-        g: loadImage("giphy.gif"),
-        createdTime: millis()
-      }
-
-      butterflyarray.push(butinfo);
-
+        currentStage = 3;
     }
   }
 }
 
-function drawgif(){
-  blendMode(BLEND);
-  // gif_createImg.position(width - 200, 350);
-}
 
 function draw() {
   if (currentStage === 1) {
     stage1();
   } else if (currentStage === 2) {
     stage2();
-  // } else if (currentStage === 3) {
-  //   stage3();
+  } else if (currentStage === 3) {
+    stage3();
   }
 
   // Request and read data from serial
@@ -102,23 +76,28 @@ function draw() {
   }
 }
 
-let serialBuffer = '';
-
 function serialEvent() {
-  while (mSerial.available()) {
-    // Read a char from the serial and add it to the buffer
-    let inChar = mSerial.read();
-    if (inChar === '\n') {
-      let dataString = serialBuffer.trim(); // Remove whitespace
-      if (dataString.length > 0) {
-        parseSerialData(dataString);
-      }
-      serialBuffer = ''; // Clear the buffer
-    } else {
-      serialBuffer += inChar; // Accumulate the char into the buffer
-    }
+  let inString = mSerial.read();
+  if (inString) {
+    console.log("Received data:", inString);
+    parseSerialData(inString);
   }
 }
+
+
+// function parseSerialData(data) {
+//   let vals = data.split(",");
+//   if (vals.length >= 2) {
+//     currentSerialVal1 = parseFloat(vals[0]); // analog value from A0
+//     currentSerialVal2 = parseInt(vals[1]); // digital state from D2
+//     console.log("Parsed values:", currentSerialVal1, currentSerialVal2);
+
+//     if (currentSerialVal2 === 1) {
+//       console.log("Switching to stage 2");
+//       currentStage = 2;
+//     }
+//   }
+// }
 
 function stage1() {
   background("blue");
@@ -141,7 +120,7 @@ function stage2() {
 
   blendMode(BLEND);
   alpha = map(frameCount % 60, 0, width, 0, 55);
-  fill(currentSerialVal1, 20, 120, alpha);
+  fill(150, 20, currentSerialVal1, alpha);
   rect(0, 0, width, height);
 
   loadPixels();
@@ -165,17 +144,6 @@ function stage2() {
   }
 
   updatePixels();
-
-  let currentTime = millis();
-  for (let i = 0; i < butterflyarray.length; i++){
-    let butterfly = butterflyarray[i];
-    // butterfly.g.position(butterfly.x, butterfly.y);
-    if (currentTime - butterfly.createdTime < 10000){
-      image(butterfly.g, butterfly.x, butterfly.y, 50, 50);
-    }
-  } 
-
-  butterflyarray = butterflyarray.filter(butterfly => currentTime - butterfly.createdTime < 5000);
 }
 
 function stage3() {
