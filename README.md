@@ -1,7 +1,7 @@
 # Week 2
 This week, I put my efforts on how to make the serial connection. I started by learning the Serial tutorial. In the meantime, I added more research into the documentation - Idea 1 Development (https://pepper-minute-d06.notion.site/Week-11-db2a3223915546ea96b4f5be9b1ca038?pvs=4). I learned examples on creating physical keyboards and began thinking do I need a final real keycap.
 
-![image description](./8.jpg)
+![image description](pics/8.jpg)
 I tried to follow the tutorial to try out the connection itself. In the process, I encountered bugs like don't have the serial monitor on at the same time of using the browser. 
 
 ![image description](./4.png)
