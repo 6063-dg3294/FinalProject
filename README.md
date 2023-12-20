@@ -4,11 +4,11 @@ This week, I put my efforts on how to make the serial connection. I started by l
 ![image description](pics/8.jpg)
 I tried to follow the tutorial to try out the connection itself. In the process, I encountered bugs like don't have the serial monitor on at the same time of using the browser. 
 
-![image description](./4.png)
+![image description](pics/4.png)
 
 After the successful connection, I wanted to build visuals that would inspire the final idea of releasing anxiety. I love butterflies and the metaphor they represent lately. I wrote circles which sizes are controlled by the photosenser to form the wings of butterflies. Here's the effect:
-![image description](./5.png)
-![image description](./6.png)
+![image description](pics/5.png)
+![image description](pics/6.png)
 
 It looked pretty ugly. 
   
@@ -16,17 +16,17 @@ So, I drew a previz on colorful circles and squares to spread out the space inst
 ![image description](./7.jpg)
 
 By creating a circle array and a rectangle array, I put all shapes in a uniform, random position that responded to the amount of light detected. A vivid, inspiring image would be adjustable by playing with the photosensor. I like the pixel art feeling it created. 
-![image description](./9.png)
-![image description](./10.png)
+![image description](pics/9.png)
+![image description](pics/10.png)
 
 
 # Milestone 2
 ### System Diagram
-![image description](./2-1.jpg)
+![image description](pics/2-1.jpg)
 
 ### Circuit Diagram & Outlook
-![image description](./2-2.jpg)
-![image description](./2-3.jpg)
+![image description](pics/2-2.jpg)
+![image description](pics/2-3.jpg)
 
 ### Planned Mechanism & Relation to Readings
 The plan is to recreate a metaphor I like: butterfly and human beings.The story of "庄周梦蝶" (Zhuangzi's Butterfly Dream) is a metaphorical narrative where the philosopher Zhuangzi dreams of being a butterfly, experiencing the world through its perspective. Upon waking, he questions the nature of reality, pondering whether he is a man who dreamt of being a butterfly or a butterfly dreaming of being a man. The metaphor underscores the philosophical concept of the relativity of perception and challenges the certainty of objective reality.
@@ -62,7 +62,7 @@ For starters, I looked into the projects online. I keep the research sources her
   
 ## 1. The Anxiety keyboard
 Inspired by the breathing project, I want to create projects that can reflect one's physical movements. The first idea I have is a mini keyboard. 
-![image description](./1.PNG)
+![image description](pics/1.PNG)
 Input: physical
   
 Output: p5
@@ -71,7 +71,7 @@ The user can click the keyboard when they feel anxious. I got the idea becuase w
 
 
 ## 2. The audio reative device 
-![image description](./2.PNG)
+![image description](pics/2.PNG)
 Inspired by the audio examples I saw, maybe I could do a physical device to control both the shape and audio on p5. 
 Input: physical  
   
@@ -79,7 +79,7 @@ Output: p5
   
 
 ## 3. A LED color-changing hat
-![image description](./3.PNG)
+![image description](pics/3.PNG)
 Input: p5
   
 Output: physical
@@ -90,28 +90,28 @@ Inspired by Adobe's real-time interactive dress (https://people.com/adobe-debuts
 
 # Milestone 3
 Based on the former weeks' sketch, I worked on the background control and testing the dream layer this week using the photoresistor. 
-![image description](./3-1.jpg)
+![image description](pics/3-1.jpg)
 
 I used the same circuit from last time, and here's an updated FSM. 
-![image description](./2-2.jpg)
-![image description](./3-2.jpg)
+![image description](pics/2-2.jpg)
+![image description](pics/3-2.jpg)
 
 ## Development of Background set up
 This week, I started from a mood board of how to build a virtual dream scene somehow. I also looked into different reference codes on OpenProcessing (@Richard Bourne) because I want to create this sea-like waves accross the screen. I refered the creation of waves using triangulars and noise().
-![image description](./3-3.png)
+![image description](pics/3-3.png)
  
  The process was not smooth, but I (we) managed to achieve the desired result. Here are some sketches along the process:
    
-![image description](./3-4.png)
+![image description](pics/3-4.png)
 The initial prototype look like this. I found out I myself wasn't ablt to create very delicate designs.
   
-![image description](./3-6.png)
+![image description](pics/3-6.png)
 After debugging and creating a parameter for the reading of photoresister, the connection was successful, and now I can use light to control the moving speed of the visuals. 
   
 ## Development of the Reality Part: Real-time camera
 During the time of stucking to debug the connection problem, I began experimenting with the blending of real-time camera with the waves. The initial effect looks like this. I'm trying to create slices of real-time images.
   
-![image description](./3-5.png)
+![image description](pics/3-5.png)
 
 
 
