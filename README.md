@@ -1,4 +1,77 @@
-# Week 2
+# Final Wrap up of everything
+Here is a summary of all the milestones. You can see the process in the sections below. 
+
+## The Idea
+The plan is to recreate a metaphor I like: butterfly and human beings.The story of "庄周梦蝶" (Zhuangzi's Butterfly Dream) is a metaphorical narrative where the philosopher Zhuangzi dreams of being a butterfly, experiencing the world through its perspective. Upon waking, he questions the nature of reality, pondering whether he is a man who dreamt of being a butterfly or a butterfly dreaming of being a man. The metaphor underscores the philosophical concept of the relativity of perception and challenges the certainty of objective reality. We have been explpriong the dream and reality created by either powerful technology companies or the new digital age this whole semester. 
+
+## System Diagram
+Updated a system diagram since last week's milestone. 2 buttons -> 3 buttons
+![image description](pics/4-1.PNG)
+
+## Circuit map & Sensor intro
+![image description](pics/4-2.PNG)
+I used 3 buttons and 1 photoresistor to control the variables of the interactive program.
+
+## FSM 
+![image description](pics/4-3.PNG)
+The mechanism, like stated in the system diagram, would be:
+  
+1. Initial Stage 1: Introduction page with audio play button
+2. Stage 2:Visual language of dreams is generated when the "to dream" circle button is pressed
+3. Visual language of butterflies in dreams is generated when the "butterfly" button is pressed
+4. photosensor detects change of light to decide the overall dream environment
+5. Stage 3: Visual language of reality is generated when the "to reality" rectangle button is pressed
+
+## External library
+I used 1. the serial connection library and 2. p5 sound library to control the audio I have for bg. 
+
+
+## Reference images, texts and projects
+https://pepper-minute-d06.notion.site/Final-Project-A-Butterfly-Dream-db2a3223915546ea96b4f5be9b1ca038?pvs=4
+
+You can find my moodboard, references and examples I looked at here. 
+
+## Short discussion of why your project is relevant:
+1. how does it connected to society?
+For the project, I started from the idea of relieving anxiety by having buttons to press. The project would help people relieve certain pressure by physical movements in the time of increased anxiety among various age groups. 
+
+2. why is it important to you?
+Like I said above, the readings we have read on de-capitalism and the power of media and visual language made me think of the boundary of reality and dreams. 
+
+
+## Short discussion of feedback from user testing
+After I ask a friend to try the circuit, she loved the idea overall. But she found the buttons hard to remember which does which. Thus, I went to MakerSpace to make button icons for the buttons by laser cutting. 
+
+## Documentation of the last week
+### Rebuilding the circuit
+I activated 3 buttons compared to only one photoresistor. This week, I achived what the FSM states by expanding a 1-stage visual (the dream) to one of the three stages. 
+
+### Rebuilding the logic
+Before, the serial logic all nest in the draw() function and was causing connection problems every time I adjusted the visuals. I now use parseSerialData(data) and HandleTransition() to read the data from arduino.
+
+### Visual Development
+At first, I tried to do the reality thing by blending it with the stage2 (dream state).
+![image description](pics/4-4.PNG)
+
+I encountered connection problems and solved by reading from Serial Monitor time to time. 
+![image description](pics/4-5.PNG)
+
+Added gifs to try to blend in.
+![image description](pics/4-6.PNG)
+
+Resize the canvas and adjusted parameters to make it do what I want. Went to office hour to improve the overall quality.
+![image description](pics/4-7.PNG)
+
+
+### Physical Box
+After testing with a friend, she suggested I should make the icons more identical. I thus designed 3 shapes for "to dream," "to butterfly," and "to reality." 
+![image description](pics/4-8.PNG)
+After cutting the icons, I thought a box would make the project look more neat as well. 
+
+
+
+# The process blogs
+## The initial try to use serial connection (week1)
 This week, I put my efforts on how to make the serial connection. I started by learning the Serial tutorial. In the meantime, I added more research into the documentation - Idea 1 Development (https://pepper-minute-d06.notion.site/Week-11-db2a3223915546ea96b4f5be9b1ca038?pvs=4). I learned examples on creating physical keyboards and began thinking do I need a final real keycap.
 
 ![image description](pics/8.jpg)
@@ -20,7 +93,7 @@ By creating a circle array and a rectangle array, I put all shapes in a uniform,
 ![image description](pics/10.png)
 
 
-# Milestone 2
+## Milestone 2
 ### System Diagram
 ![image description](pics/2-1.jpg)
 
