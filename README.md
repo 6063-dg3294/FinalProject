@@ -66,7 +66,8 @@ Resize the canvas and adjusted parameters to make it do what I want. Went to off
 ### Physical Box
 After testing with a friend, she suggested I should make the icons more identical. I thus designed 3 shapes for "to dream," "to butterfly," and "to reality." 
 ![image description](pics/4-8.PNG)
-After cutting the icons, I thought a box would make the project look more neat as well. 
+After cutting the icons, I thought a box would make the project look more neat as well. I tried both birch wood and acrylic to cut and engrave. In the process, it was scarry to watch the edges of wood and arylic to burn. At last, I managed to 
+
 
 
 
